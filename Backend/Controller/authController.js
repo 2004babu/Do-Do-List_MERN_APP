@@ -6,6 +6,7 @@ const bcryptjs=require('bcryptjs')
 const jwt=require('jsonwebtoken')
 const ErrorHandler=require('../utils/ErrorHandler')
 const crypto = require("crypto");
+const mongoose = require("mongoose");
 
 
 // find a person who have already login ,,--vaerify them token and Find them Id 
@@ -18,9 +19,11 @@ exports.isAuthenticatedUser=catchAsyncError(async(req,res,next)=>{
   }
 
   const {id}= await jwt.verify(token,process.env.JWT_SECRET)
+  // console.log(id);
+
   const user=await User.findById(id)
   req.user=user
-  // console.log(user);
+  console.log("isAuthenticateduser",user);
 next()
 })
 
@@ -54,8 +57,6 @@ if (!passwordisValid) {
 }
 
 setToken(user,res,200)
-
-
 });
 
 // REGISTER --server/register --post
