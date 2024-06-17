@@ -1,0 +1,46 @@
+import { LogoutUserFail, LogoutUserRequest, LogoutUserSuccess, userFail, userRequest, userSuccess, userUpdateFail, userUpdateRequest, userUpdateSuccess } from "../Slice/authSlice"
+import axios from 'axios'
+
+//login process 
+export const getUser=userdata=>async(dispatch)=>{
+    try {
+        dispatch(userRequest())
+        const {data}=await axios.post('/server/login',userdata)
+        dispatch(userSuccess(data))
+    } catch (error) {
+        dispatch(userFail(error))
+    }
+}
+
+// registerUser
+export const registerUser=userdata=>async(dispatch)=>{
+    try {
+        dispatch(userRequest())
+        const {data}=await axios.post('/server/register',userdata)
+        dispatch(userSuccess(data))
+    } catch (error) {
+        dispatch(userFail(error))
+    }
+}
+// upateUser
+export const UpdateUser=userdata=>async(dispatch)=>{
+    try {
+        dispatch(userUpdateRequest())
+        const {data}=await axios.put('/server/password/update',userdata)
+        dispatch(userUpdateSuccess(data))
+    } catch (error) {
+        dispatch(userUpdateFail(error))
+    }
+}
+
+// logoutUser
+export const logoutUser=async(dispatch)=>{
+    try {
+        dispatch(LogoutUserRequest())
+        await axios.delete('/server/logout')
+        dispatch(LogoutUserSuccess())
+    } catch (error) {
+        dispatch(LogoutUserFail(error))
+    }
+}
+

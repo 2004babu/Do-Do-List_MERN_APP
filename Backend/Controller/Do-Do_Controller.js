@@ -104,11 +104,12 @@ console.log(DoDo);
 
 // GET alll DODO  --http://localhost:4000/server/getalldodo --get
 exports.getAllDoDo = catchAsyncError(async (req, res, next) => {
-const userId= req.user._id
-  if (!req.user||!userId) {
+  if (!req.user||!req.user._id) {
     return next(new ErrorHandler("login firs to handle this ", 401));
     
   }
+  const userId= req.user._id
+
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return next(new ErrorHandler("Invalid user ID", 400));
   }
@@ -125,3 +126,4 @@ console.log(DoDo);
 
 });
 
+ 

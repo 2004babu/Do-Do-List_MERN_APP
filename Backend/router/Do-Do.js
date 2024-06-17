@@ -1,7 +1,7 @@
 const express=require('express')
 const router=express.Router()
 
-const {isAuthenticatedUser}=require('../Controller/authController')
+const {isAuthenticatedUser, logoutUser}=require('../Controller/authController')
 const { createDoDo, updateDoDo, deleteDoDo, getSingleDoDo, getAllDoDo } = require('../Controller/Do-Do_Controller')
 
 router.route('/dodo')
@@ -13,6 +13,8 @@ router.route('/dodo/:id')
                     
 router.route('/getalldodo')
                     .get(isAuthenticatedUser,getAllDoDo)
+router.route('/logout')
+                    .delete(isAuthenticatedUser,logoutUser)
 
 
 module.exports=router

@@ -15,11 +15,12 @@ exports.isAuthenticatedUser=catchAsyncError(async(req,res,next)=>{
   const {token}=req.cookies;
   
   if(!token){
-   return next()
+   return next(new ErrorHandler('login first to handle this.!!'))
   }
 
   const {id}= await jwt.verify(token,process.env.JWT_SECRET)
   // console.log(id);
+
 
   const user=await User.findById(id)
   req.user=user
@@ -214,6 +215,15 @@ console.log(user);
   user.password=password;
   user.save()
   setToken(user,res,200)
+});
+exports.logoutUser = catchAsyncError(async (req, res, next) => {
+
+  const {token} =req.cookies;
+  console.log(token);
+  res.status(200).cookie('token',token,{expires:new Date(Date.now()),httpOnly:true}).json({
+    success:true,
+    message:"logout Success"
+  })
 });
 
 
