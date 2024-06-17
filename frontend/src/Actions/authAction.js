@@ -8,7 +8,7 @@ export const getUser=userdata=>async(dispatch)=>{
         const {data}=await axios.post('/server/login',userdata)
         dispatch(userSuccess(data))
     } catch (error) {
-        dispatch(userFail(error))
+        dispatch(userFail(error.response.data.error))
     }
 }
 
@@ -19,7 +19,7 @@ export const registerUser=userdata=>async(dispatch)=>{
         const {data}=await axios.post('/server/register',userdata)
         dispatch(userSuccess(data))
     } catch (error) {
-        dispatch(userFail(error))
+        dispatch(userFail(error.response.data.error))
     }
 }
 // upateUser
@@ -29,7 +29,7 @@ export const UpdateUser=userdata=>async(dispatch)=>{
         const {data}=await axios.put('/server/password/update',userdata)
         dispatch(userUpdateSuccess(data))
     } catch (error) {
-        dispatch(userUpdateFail(error))
+        dispatch(userUpdateFail(error.response.data.error))
     }
 }
 
@@ -40,7 +40,7 @@ export const logoutUser=async(dispatch)=>{
         await axios.delete('/server/logout')
         dispatch(LogoutUserSuccess())
     } catch (error) {
-        dispatch(LogoutUserFail(error))
+        dispatch(LogoutUserFail(error.response.data.error))
     }
 }
 

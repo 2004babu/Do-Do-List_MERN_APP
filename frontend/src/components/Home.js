@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import MetaData from './layouts/MetaData'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
 
@@ -13,6 +14,7 @@ const Home = () => {
     <div>
       home
       <MetaData title={'Home'}/>
+      <Link to={'/login'}> <h1>Login</h1></Link>
     </div>
   )
 }
