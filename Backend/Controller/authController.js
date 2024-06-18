@@ -29,6 +29,23 @@ next()
 })
 
 
+// login with Cookie -- server/login --get
+exports.loadUser = catchAsyncError(async (req, res, next) => {
+
+ 
+  if(!req.user){
+    return res.status(200).json({
+      success: false,
+      message: "Not  login user",
+    });
+  }
+  res.status(200).json({
+    success:true,
+    message:"is AuthenticatedUser ...!!",
+    user:req.user
+  })
+
+});
 // LOGIN -- server/login --post
 exports.login = catchAsyncError(async (req, res, next) => {
 

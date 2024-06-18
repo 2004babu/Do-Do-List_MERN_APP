@@ -7,14 +7,14 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user = {}, isAuthenticatedUser = null } = useSelector(
-    (state = state.authState)
+    (state =>state.authState)
   );
   const handleLogin = () => {
     navigate("/login");
   };
   const handleLogout = () => {
     
-    dispatch(logoutUser())
+    dispatch(logoutUser)
     navigate("/logout");
   };
   return (

@@ -1,4 +1,4 @@
-import { LogoutUserFail, LogoutUserRequest, LogoutUserSuccess, userFail, userRequest, userSuccess, userUpdateFail, userUpdateRequest, userUpdateSuccess } from "../Slice/authSlice"
+import { LogoutUserFail, LogoutUserRequest, LogoutUserSuccess, loadUserFail, loadUserRequest, loadUserSuccess, userFail, userRequest, userSuccess, userUpdateFail, userUpdateRequest, userUpdateSuccess } from "../Slice/authSlice"
 import axios from 'axios'
 
 //login process 
@@ -41,6 +41,17 @@ export const logoutUser=async(dispatch)=>{
         dispatch(LogoutUserSuccess())
     } catch (error) {
         dispatch(LogoutUserFail(error.response.data.error))
+    }
+}
+
+// load User -initial using cookies
+export const loaduser=async(dispatch)=>{
+    try {
+        dispatch(loadUserRequest())
+       const {data}= await axios.get('/server/login')
+        dispatch(loadUserSuccess(data))
+    } catch (error) {
+        dispatch(loadUserFail())
     }
 }
 

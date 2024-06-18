@@ -7,14 +7,13 @@ const { createDoDo, updateDoDo, deleteDoDo, getSingleDoDo, getAllDoDo } = requir
 router.route('/dodo')
                     .post(isAuthenticatedUser,createDoDo)
                     .put(isAuthenticatedUser,updateDoDo)
-                    .delete(isAuthenticatedUser,deleteDoDo)
 router.route('/dodo/:id')
+                    .delete(isAuthenticatedUser,deleteDoDo)
                     .get(isAuthenticatedUser,getSingleDoDo)
                     
 router.route('/getalldodo')
                     .get(isAuthenticatedUser,getAllDoDo)
-router.route('/logout')
-                    .delete(isAuthenticatedUser,logoutUser)
+
 
 
 module.exports=router

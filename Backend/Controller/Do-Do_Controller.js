@@ -62,13 +62,14 @@ console.log(DoDo);
 // deleteDoDo  --http://localhost:4000/server/dodo --delete
 exports.deleteDoDo = catchAsyncError(async (req, res, next) => {
 
-  const {DoDoId } = req.body;
+ 
+  const {id } = req.params;
 
-  if (!DoDoId) {
+  if (!id) {
     return next(new ErrorHandler("send DoDoId", 304));
   }
 
-  const DoDo = await DoDo_Model.findByIdAndDelete(DoDoId);
+  const DoDo = await DoDo_Model.findByIdAndDelete(id);
   if (!DoDo) {
     return next(new ErrorHandler("Error in Model", 401));
   }
