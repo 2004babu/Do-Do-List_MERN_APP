@@ -62,29 +62,33 @@ const DoDoList = () => {
   }, [dispatch, isAuthenticatedUser,error,isDoDoDeleted]);
   return (
     <Fragment>
-      <div className="nav-dodo">
+      <div className="input-gruop">
         <label htmlFor="search">Search</label>
         <input
           type="text"
           name="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="input"
+          className="form-control"
         />
-        
+       
       </div>
       <Fragment>
-        <table border={3} className=" table  table-bordered table-hover ">
-          <tr>
-            <th>Title</th>
-            <th>subject</th>
-            <th>CreateAt</th>
-            <th>Edit/Delete</th>
+        <table border={2}  className=" table table-striped table-hover table-bordered  mt-4">
+         <thead>
+          <tr className="table-dark">
+            <th className="col text-center">Title</th>
+            <th className="col text-center">subject</th>
+            <th className="col text-center">CreateAt</th>
+            <th className="col text-center">Edit/Delete</th>
           </tr>
+          </thead> 
+          <tbody>
 
           {filtered.length ? (
             filtered.map((item) => <List key={item._id} item={item} />)
           ):null }
+          </tbody>
           
               
           

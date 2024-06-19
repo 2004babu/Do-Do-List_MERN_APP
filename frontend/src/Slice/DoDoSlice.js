@@ -111,7 +111,7 @@ const DoDoSlice = createSlice({
     clearDoDoDeleted(state, action) {
       return {
         ...state,
-        isDoDoUpdated: false,
+        isDoDoDeleted: false,
       };
     },
     clearDoDoCreated(state, action) {

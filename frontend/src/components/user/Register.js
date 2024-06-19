@@ -58,7 +58,7 @@ const Register = () => {
   return (
     <Fragment>
       <MetaData title={"Login "} />
-      <div className="login-page">
+      <div className="login-page shadow p-3 mb-5 bg-body-tertiary rounded">
         <form action="#" onSubmit={handleSubmit}>
           <h1 className="mb-3">login</h1>
           <div className="data-group">

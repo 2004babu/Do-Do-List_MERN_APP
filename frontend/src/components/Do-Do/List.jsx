@@ -25,13 +25,13 @@ const List = ({item}) => {
   },[isDoDoDeleted])
   return (
     <tr >
-        <td>{item.Data.title}</td>
-        <td>{item.Data.subject}</td>
-        <td>{item.cretaAt}</td>
-        <td>{(<Fragment>
+        <td className=' text-wrap col px-md-5 px-sm-1  '>{item.Data.title}</td>
+        <td className='text-wrap col px-md-5 px-sm-1 '>{item.Data.subject}</td>
+        <td className='text-wrap col px-md-5 px-sm-1'>{item.cretaAt}</td>
+        <td className='text-wrap col px-md-5 px-sm-1  d-flex colum gap-1' >{(<Fragment>
            
-            <button  type='button' id='edit_page_btn' style={{backgroundColor:'blue'}}  ><Link id='edit' to={`edit/${item._id}`} >Edit</Link></button>
-            <button  type='button'  id='edit_page_btn' style={{backgroundColor:'red'}} onClick={(e)=>{handleDelete(e,item._id)}} >Delete</button>
+            <button className='col px-md-2 px-sm-1 '  type='button' id='edit_page_btn' style={{backgroundColor:'#49108B'}}  ><Link id='edit'  to={`edit/${item._id}`} className='col-12 py-3 px-3 px-md-3' >Edit</Link></button>
+            <button className='col px-md-2 px-sm-1 ' type='button'  id='edit_page_btn' style={{backgroundColor:'#FF3EA5'}} onClick={(e)=>{handleDelete(e,item._id)}} >Delete</button>
            
         </Fragment>)}</td>
     </tr>

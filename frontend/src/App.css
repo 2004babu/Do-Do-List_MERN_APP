@@ -61,12 +61,12 @@ header button{
     width: 100%;
     gap: 10px;
 }
-.login-page form .data-group label{
+/* .login-page form .data-group label{
     width: 100%;
     
     text-align: left;
     font-size: medium;
-}
+} */
 .login-page form  button{
     border: none;
     outline: none;
@@ -128,11 +128,11 @@ input {
     width: auto 30%;
 
   }
-  table :first-child{
+  /* table :first-child{
    
     height: 30px;
     width: 100%;
-  }
+  } */
   
   table tr{
     

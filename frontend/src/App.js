@@ -14,6 +14,7 @@ import { loaduser } from './Actions/authAction';
 import Register from './components/user/Register';
 import EditDoDo from './components/Do-Do/EditDoDo';
 import { useEffect } from 'react';
+import Profile from './components/user/Profile';
 function App() {
 useEffect(()=>{
   store.dispatch(loaduser)
@@ -24,13 +25,14 @@ useEffect(()=>{
     <Router>
        <HelmetProvider>
         <Header/>
-        <div id='index_container'>
+        <div className='container-fluid p-sm-1 p-md-5 d-flex justify-content-center'>
           <ToastContainer theme='dark'/>
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<UserLogin/>}/>
           <Route path='/createDoDo' element={<CreateDoDo/>}/>
           <Route path='/register' element={<Register/>}/>
+          <Route path='/profile' element={<Profile/>}/>
           <Route path='/edit/:id' element={<EditDoDo
           />}/>
         </Routes>
