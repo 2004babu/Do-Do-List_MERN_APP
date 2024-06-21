@@ -7,7 +7,7 @@ import { DoDoCreateFail, DoDoCreateRequest, DoDoCreateSuccess, DoDoFail, DoDoReq
 export const createDoDo=DoDoData=>async(dispatch)=>{
     try {
         dispatch(DoDoCreateRequest())
-        const {data}=await axios.post('/server/dodo',{Data:DoDoData})
+        const {data}=await axios.post('/api/server/dodo',{Data:DoDoData})
         dispatch(DoDoCreateSuccess(data))
     } catch (error) {
         dispatch(DoDoCreateFail(error.response.data.message))
@@ -18,7 +18,7 @@ export const createDoDo=DoDoData=>async(dispatch)=>{
 export const updateDoDo=DoDoData=>async(dispatch)=>{
     try {
         dispatch(DoDoUpdateRequest())
-        const {data}=await axios.put('/server/dodo',DoDoData)
+        const {data}=await axios.put('/api/server/dodo',DoDoData)
         dispatch(DoDoUpdateSuccess(data))
     } catch (error) {
         dispatch(DoDoUpdateFail(error.response.data.error))
@@ -37,7 +37,7 @@ export const deleteDoDO=DoDoId=>async(dispatch)=>{
             }
         }
         dispatch(deleteDoDoRequest())
-        await axios.delete(`/server/dodo/${DoDoId}`)
+        await axios.delete(`/api/server/dodo/${DoDoId}`)
         dispatch(deleteDoDoSuccess())
     } catch (error) {
         dispatch(deleteDoDoFail(error.response.data.message))
@@ -47,7 +47,7 @@ export const deleteDoDO=DoDoId=>async(dispatch)=>{
 export const getSingleDoDo=id=>async(dispatch)=>{
     try {
         dispatch(DoDoRequest())
-        const {data}=await axios.get(`/server/dodo/${id}`)
+        const {data}=await axios.get(`/api/server/dodo/${id}`)
         dispatch(DoDoSuccess(data))
     } catch (error) {
         dispatch(DoDoFail(error.response.data.message))
@@ -58,7 +58,7 @@ export const getSingleDoDo=id=>async(dispatch)=>{
 export const getallDoDo=async(dispatch)=>{
     try {
         dispatch(DoDoRequest())
-        const {data}=await axios.get(`/server/getalldodo`)
+        const {data}=await axios.get(`/api/server/getalldodo`)
         dispatch(DoDoSuccess(data))
     } catch (error) {
         dispatch(DoDoFail(error.response.data.message))

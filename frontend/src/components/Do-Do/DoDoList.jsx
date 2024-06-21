@@ -26,7 +26,7 @@ const DoDoList = () => {
 
   let filtered;
 
-  const isNotFound = search.length ? true : false;
+
 
   filtered = dodostate;
   if (search) {
@@ -39,17 +39,16 @@ const DoDoList = () => {
       }
     });
   }
-  console.log(filtered);
-  console.log(isNotFound);
-  const hashSync=()=>{
-    console.log('s,kbsdl');
-  }
+ 
   useEffect(() => {
     if (isDoDoDeleted) {
       toast('Delete success',{type:'success',onOpen:()=>{
         dispatch(clearDoDoDeleted())
-
+        
       }})
+    }
+    if (isAuthenticatedUser) {
+      dispatch(getallDoDo);
     }
     if(error){
       toast(error,{type:'error',onOpen:()=>{
@@ -58,8 +57,7 @@ const DoDoList = () => {
       }})
     }
     
-    dispatch(getallDoDo);
-  }, [dispatch, isAuthenticatedUser,error,isDoDoDeleted]);
+  }, [dispatch,error,isDoDoDeleted,isAuthenticatedUser,isDoDoUpdated]);
   return (
     <Fragment>
       <div className="input-gruop">

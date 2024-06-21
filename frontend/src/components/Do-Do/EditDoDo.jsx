@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearDoDoUpdate, clearError } from "../../Slice/DoDoSlice";
 import { getSingleDoDo, updateDoDo } from "../../Actions/DoDoActions";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const EditDoDo = () => {
@@ -23,7 +23,7 @@ const EditDoDo = () => {
 
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState();
-
+const navigate=useNavigate()
   const handleSubmit = (e) => {
     e.preventDefault();
     const info = {
@@ -36,13 +36,16 @@ const EditDoDo = () => {
     dispatch(updateDoDo(info));
   };
   useEffect(() => {
+    
     if (isDoDoUpdated) {
       toast("updated  success", {
         type: "success",
         onOpen: () => {
           dispatch(clearDoDoUpdate());
+          navigate('/')
         },
       });
+      return
     }
     if (error) {
       toast(error, {
@@ -51,17 +54,24 @@ const EditDoDo = () => {
           dispatch(clearError());
         },
       });
+      return
     }
 
-    dispatch(getSingleDoDo(id));
+    if (!isDoDoUpdated) {
+      dispatch(getSingleDoDo(id));
+      return
+    }
   }, [dispatch, isAuthenticatedUser, isDoDoUpdated]);
 
   useEffect(() => {
     if (dodostate.Data) {
       setSubject(dodostate.Data.subject);
       setTitle(dodostate.Data.title);
+      return
     }
   }, [dodostate]);
+  
+
   return (
     <Fragment>
       <form action="#" className=" container-fluid col-sm-8 col-md-6 col-lg-4 mb-4 shadow p-3 mb-5 bg-body-tertiary rounded" onSubmit={handleSubmit}>

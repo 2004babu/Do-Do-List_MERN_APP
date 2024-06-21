@@ -111,15 +111,19 @@ exports.getAllDoDo = catchAsyncError(async (req, res, next) => {
   }
   const userId= req.user._id
 
+
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return next(new ErrorHandler("Invalid user ID", 400));
   }
 
   const DoDo = await DoDo_Model.find({user:userId});
   if (!DoDo || DoDo.length === 0) {
-    return next(new ErrorHandler("No DoDo items found", 404));
+    return res.status(200).json({
+      success:true,
+      message:"No DoDO Here ...!! Crate New DoDo"
+    });
   }
-console.log(DoDo);
+// console.log(DoDo);
   res.status(200).json({
     success: true,
     DoDo,

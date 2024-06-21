@@ -15,6 +15,9 @@ import Register from './components/user/Register';
 import EditDoDo from './components/Do-Do/EditDoDo';
 import { useEffect } from 'react';
 import Profile from './components/user/Profile';
+import EditProfile from './components/user/EditProfile';
+import ForgotPassword from './components/user/ForgotPassword';
+import ResetPassword from './components/user/ResetPassword';
 function App() {
 useEffect(()=>{
   store.dispatch(loaduser)
@@ -33,8 +36,10 @@ useEffect(()=>{
           <Route path='/createDoDo' element={<CreateDoDo/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/profile' element={<Profile/>}/>
-          <Route path='/edit/:id' element={<EditDoDo
-          />}/>
+          <Route path='/edit/:id' element={<EditDoDo/>}/>
+          <Route path='/editprofile/:id' element={<EditProfile/>}/>
+          <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+          <Route path='/password/reset/:id' element={<ResetPassword/>}/>
         </Routes>
         </div>
         <Footer/>

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import MetaData from "../layouts/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getUser } from "../../Actions/authAction";
 import { clearError } from "../../Slice/authSlice";
 import { toast } from "react-toastify";
@@ -39,29 +39,36 @@ const UserLogin = () => {
   return (
     <Fragment>
       <MetaData title={"Login "} />
-      <div className="login-page">
-        <form action="#" onSubmit={handleSubmit}>
-          <h1 className="mb-3">login</h1>
-          <div className="data-group">
+      <div className="row d-flex mt-5 shadow p-3 mb-5 bg-body rounded" >
+        <form action="#"  className='p-4' onSubmit={handleSubmit}>
+          <h1 className="mb-3 text-center text-uppercase">login</h1>
+          <div className="form-group">
             <label htmlFor="email-feild">Email</label>
             <input
               type="email"
-              className="input"
+              className="form-control"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="data-group">
+          <div className="form-group">
             <label htmlFor="password-feild">password</label>
             <input
               type="password"
-              className="input"
+              className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button disabled={loading}>Submit</button>
+          <button className="btn btn-success mt-2 w-100 align-center" type="submit" disabled={loading}>Submit</button>
+              
+          <div className="d-flex colum justify-content-around">
+              <Link to={'/register'} className="text-muted " style={{fontSize:'12px'}}> New User ?</Link>
+              <Link to={'/forgotpassword'} className="text-muted " style={{fontSize:'12px'}}> forgotPassword ?</Link>
+
+          </div>
         </form>
+        
       </div>
     </Fragment>
   );

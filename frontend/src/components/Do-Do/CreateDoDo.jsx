@@ -56,7 +56,7 @@ const CreateDoDo = () => {
       
         <form action="#" className="d-flex row  mt-4 p-4 col-lg-4 justify-content-lg-center shadow p-3 mb-5 bg-body-tertiary rounded
         "  onSubmit={handleSubmit}>
-          <h1 className="mb-3 text-center">Login</h1>
+          <h1 className="mb-3 text-center">Create DoDo</h1>
           <div className="form-floating mb-2">
           <input
             type="text"

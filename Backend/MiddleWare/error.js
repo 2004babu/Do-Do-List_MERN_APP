@@ -1,32 +1,47 @@
 const ErrorHandler = require("../utils/ErrorHandler");
 module.exports = (err, req, res, next) => {
-  err.statuscode = this.statuscode || 500;
+  console.log(err);
+  err.statuscode = err.statuscode || 500;
+
   
-  res.status(err.statuscode).json({
-    message: err.message,
-    stack: err.stack,
-    error: err,
-  });
-  if (process.env.NODE_ENV == "development") {
+  ///////development
+  if (process.env.NODE_ENV == "Development") {
     res.status(err.statuscode).json({
       success: false,
       message: err.message,
       stack: err.stack,
       error: err,
     });
-  }
- else if(process.env.NODE_ENV == "Production"){
-    let message=err.message
-    let error=new Error(message)
-
+    ///////production 
+  } else if (process.env.NODE_ENV == "Production") {
+    let message = err.message;
+    let error = new Error(message);
+///////mongoose validation 
+    if (err.name == "ValidationError") {
+      message = Object.values(err.errors).map((value) => value.message);
+      error = new Error(message);
+      error.statuscode=400
+      
+    }
+    ///////mongoose object id error 
+    if (err.name == "CastError") {
+       
+      message = `Resuorce Not Found :${err.path}`;
+      error = new Error(message);
+      error.statuscode=400
+      
+    }
+  
     res.status(err.statuscode).json({
-        message:err.message||'internal Server Error'
-
-    })
-  }else{
+      success: false,
+      message: error.message || "internal server Error",
+    });
+  } else {
+    // Handle unexpected environment values
     res.status(err.statuscode).json({
-        success: false,
-        message: "An error occurred",
-      });
+      err,
+      success: false,
+      message: "An error occurred",
+    });
   }
 };

@@ -13,9 +13,9 @@ const mongoose = require("mongoose");
 exports.isAuthenticatedUser=catchAsyncError(async(req,res,next)=>{
 
   const {token}=req.cookies;
-  
+  // console.log(token);
   if(!token){
-   return next(new ErrorHandler('login first to handle this.!!'))
+   return next()
   }
 
   const {id}= await jwt.verify(token,process.env.JWT_SECRET)
@@ -24,12 +24,12 @@ exports.isAuthenticatedUser=catchAsyncError(async(req,res,next)=>{
 
   const user=await User.findById(id)
   req.user=user
-  console.log("isAuthenticateduser",user);
+  // console.log("isAuthenticateduser",user);
 next()
 })
 
 
-// login with Cookie -- server/login --get
+// login with Cookie -- /api/server/login --get
 exports.loadUser = catchAsyncError(async (req, res, next) => {
 
  
@@ -46,7 +46,7 @@ exports.loadUser = catchAsyncError(async (req, res, next) => {
   })
 
 });
-// LOGIN -- server/login --post
+// LOGIN -- /api/server/login --post
 exports.login = catchAsyncError(async (req, res, next) => {
 
   const {email,password}=req.body;
@@ -77,11 +77,12 @@ if (!passwordisValid) {
 setToken(user,res,200)
 });
 
-// REGISTER --server/register --post
+// REGISTER --/api/server/register --post
 exports.register = catchAsyncError(async (req, res, next) => {
 
  
     const {name,email,password}=req.body;
+   
   if ( !name ||! email || ! password) {
     return res.status(401).json({
       success: false,
@@ -89,12 +90,24 @@ exports.register = catchAsyncError(async (req, res, next) => {
     });
   }
 
+  let avatar;
+
+  let BASE_URL=process.env.BACKEND_URL
+  if(process.env.NODE_ENV==='Production'){
+    BASE_URL=`${req.protocol}://${req.get('host')}`
+  }
+  // console.log(BASE_URL);
+  // console.log(req.file);
+  if(req.files){
+    avatar=`${BASE_URL}/uploads/user/${req.file.originalname}`
+  }
 
 
   let userData={
     name,
     password,
-    email 
+    email,
+    avatar
   }
 
  const user= await  User.create(userData)
@@ -103,7 +116,7 @@ user.save()
 setToken(user,res,200)
 });
 
-// update password --server/update --put
+// update password --/api/server/update --put
 exports.updatePassword = catchAsyncError(async (req, res, next) => {
 
   const {email,password,oldPassword}=req.body;
@@ -142,7 +155,7 @@ res.status(200).json({
 });
 
 
-// FORGOT PASSWORD --http://localhost:4000/server/password/forgot
+// FORGOT PASSWORD --http://localhost:4000/api/server/password/forgot
 
 exports.forgotPassword = catchAsyncError(async (req, res, next) => {
 
@@ -163,10 +176,7 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
   }
 
   const token=await user.getResetToken()
-  // const hase=await user.hashResetToken(token)
 
-  // user.passwordResetToken=hase
-  // user.resetPasswordTokenExpire=Date.now() +30*60*1000;
   user.save()
 let BASE_URL=process.env.FRONTEND_URL
 
@@ -176,7 +186,7 @@ let BASE_URL=process.env.FRONTEND_URL
   }
 
   let sendMessage=`Your Password Changing link \n\n
-        ${BASE_URL}//password/reset/${token}\n\n\n\n
+        ${BASE_URL}/password/reset/${token}\n\n\n\n
       NOTE:  if Your Not request for change password then Dot Touch this link
   `
 
@@ -196,7 +206,7 @@ res.status(200).json({
 user.passwordResetToken=undefined;
  user.resetPasswordTokenExpire=undefined
  await user.save({validateBeforeSave:true})
- return next(new ErrorHandler(error.message,500))
+ return next(new ErrorHandler('fail in make Email reset token send mail',500))
 }
 
 });
@@ -206,6 +216,7 @@ user.passwordResetToken=undefined;
 exports.changePassword = catchAsyncError(async (req, res, next) => {
 
   const {password,confirmPassword,id}=req.body;
+  console.log(password,confirmPassword,id);
 
   let passwordResetToken=await crypto.createHash('sha256').update(id).digest('hex')
   const user=await User.findOne({
@@ -244,3 +255,30 @@ exports.logoutUser = catchAsyncError(async (req, res, next) => {
 });
 
 
+
+
+exports.updateProfile=catchAsyncError(async(req,res,next)=>{
+
+  const {name}=req.body;
+  
+  let avatar;
+  let BASE_URL = process.env.BACKEND_URL;
+  if(process.env.NODE_ENV === "Production"){
+      BASE_URL = `${req.protocol}://${req.get('host')}`
+  }
+  if (req.file) {
+      avatar= `${BASE_URL}/uploads/user/${req.file.originalname}`
+  }
+
+  const user=await User.findByIdAndUpdate(req.user._id,{name,avatar});
+
+  if(!user){
+    return next(new ErrorHandler('Not Found this Id...!'))
+  }
+  
+  res.status(200).json({
+    success:true,
+    user,
+    message:"updtaeSuccess"
+  })
+})
