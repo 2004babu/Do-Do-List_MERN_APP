@@ -17,7 +17,7 @@ const Dodo_Schema=mongoose.Schema({
             type:String,
         }
     },
-    isModified:{
+    Modified:{
         type:Date
     },
     cretaAt:{

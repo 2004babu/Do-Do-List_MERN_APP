@@ -34,7 +34,7 @@ exports.createDoDo = catchAsyncError(async (req, res, next) => {
 exports.updateDoDo = catchAsyncError(async (req, res, next) => {
 
   const {DoDoId, Data } = req.body;
-  let isModified= Date.now();
+  let Modified= Date.now();
   if (!Data) {
     return next(new ErrorHandler("send DoDo Data", 304));
   }
@@ -44,7 +44,7 @@ exports.updateDoDo = catchAsyncError(async (req, res, next) => {
   
   const setDoDoData = {
     Data,
-    isModified
+    Modified
   };
  
 
