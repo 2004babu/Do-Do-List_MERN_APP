@@ -8,7 +8,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const location=useLocation()
 
-  const { user = {}, isAuthenticatedUser = null } = useSelector(
+  const {  isAuthenticatedUser = null } = useSelector(
     (state) => state.authState
   );
 
@@ -52,7 +52,7 @@ const Header = () => {
               <Link to={'profile'}  > Profile</Link>
             </li>}
             <li className="nav-item p-sm-1 p-md-2">
-              <Link to={'profile'}> About</Link>
+              <Link to={'about'}> About</Link>
             </li>
             {/* Additional nav items can be added here */}
           </ul>

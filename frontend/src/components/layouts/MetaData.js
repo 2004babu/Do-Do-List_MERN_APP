@@ -2,9 +2,9 @@ import React from 'react'
 import {Helmet} from 'react-helmet-async'
 const MetaData = ({title}) => {
   return (
-    <Helmet >
-      <title title={`${title} -Babu App`}></title>
-    </Helmet>
+    <Helmet>
+            <title>{`${title} - BabuApp`}</title>
+     </Helmet>
   )
 }
 

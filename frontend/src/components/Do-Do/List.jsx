@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { Fragment } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteDoDO } from '../../Actions/DoDoActions'
-import {toast} from 'react-toastify'
-import { clearDoDoDeleted } from '../../Slice/DoDoSlice'
+import {format} from 'date-fns'
 const List = ({item}) => {
   const dispatch=useDispatch()
   const handleDelete=(e,id)=>{
@@ -12,22 +11,13 @@ const List = ({item}) => {
     dispatch(deleteDoDO(id))
 
   }
-  const {
-    DoDo: dodostate = [],
-    loading = false,
-    isDoDoDeleted = null,
-    error = null,
-    isDoDoUpdated = false,
-    isDoDoCreated = false,
-  } = useSelector((State) => State.DoDoState);
-  useEffect(()=>{
-    
-  },[isDoDoDeleted])
+
+  let newDate=format(new Date(item.cretaAt),'h:mm:ss ,dd-MMM-yyyy ')
   return (
     <tr >
         <td className=' text-wrap col px-md-5 px-sm-1  '>{item.Data.title}</td>
         <td className='text-wrap col px-md-5 px-sm-1 '>{item.Data.subject}</td>
-        <td className='text-wrap col px-md-5 px-sm-1'>{item.cretaAt}</td>
+        <td className='text-wrap col px-md-5 px-sm-1'>{newDate}</td>
         <td className='text-wrap col px-md-5 px-sm-1  d-flex colum gap-1' >{(<Fragment>
            
             <button className='col px-md-2 px-sm-1 '  type='button' id='edit_page_btn' style={{backgroundColor:'#49108B'}}  ><Link id='edit'  to={`edit/${item._id}`} className='col-12 py-3 px-3 px-md-3' >Edit</Link></button>

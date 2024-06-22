@@ -2,14 +2,14 @@ import React, { Fragment, useEffect, useState } from "react";
 import MetaData from "../layouts/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getUser, registerUser } from "../../Actions/authAction";
+import {  registerUser } from "../../Actions/authAction";
 import { clearError } from "../../Slice/authSlice";
 import { toast } from "react-toastify";
 const Register = () => {
   const disaptch = useDispatch();
   const navigate = useNavigate();
   const {
-    user = {},
+   
     loading = false,
     isAuthenticatedUser = null,
     error = null,
@@ -49,13 +49,13 @@ console.log(Avatar);
         },
       });
     }
-  }, [isAuthenticatedUser, error, clearError, disaptch]);
+  }, [isAuthenticatedUser, error, disaptch,navigate]);
   const handleAvatar = (e) => {
     console.log(e.target.files[0]);
     const reader = new FileReader();
 
     reader.onload = () => {
-      if (reader.readyState == 2) {
+      if (reader.readyState === 2) {
         setAvatar(e.target.files[0]);
         setAvatarPreview(reader.result);
       }
@@ -64,7 +64,7 @@ console.log(Avatar);
   };
   return (
     <Fragment>
-      <MetaData title={"Login "} />
+      <MetaData title={"register "} />
       <div className="row shadow p-3 mb-5 bg-body-tertiary rounded">
         <form
           action="#"
@@ -114,6 +114,7 @@ console.log(Avatar);
             {AvatarPreview && (
               <figure className="img-register">
                 <img
+                alt="register page"
                   className="form-control"
                   height={"40px"}
                   width={"40px"}

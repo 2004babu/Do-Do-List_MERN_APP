@@ -207,3 +207,8 @@ a{
     height: 10px;
     
 }
+
+
+.object-fit-cover{
+    object-fit: cover;
+}

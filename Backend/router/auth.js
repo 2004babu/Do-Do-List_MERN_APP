@@ -21,7 +21,7 @@ router.route('/login').post(login)
 router.route('/register').post(upload.single('avatar'),register)
 router.route('/password/update').put(isAuthenticatedUser,updatePassword)
 router.route('/password/forgot').post(forgotPassword)
-router.route('/password/change').post(isAuthenticatedUser,changePassword)
+router.route('/password/change').post(changePassword)
 router.route('/logout').delete(isAuthenticatedUser,logoutUser)
 router.route('/profile/update').post(upload.single('avatar'),isAuthenticatedUser,updateProfile)
 module.exports=router

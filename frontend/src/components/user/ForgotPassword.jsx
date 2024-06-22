@@ -3,6 +3,7 @@ import {useDispatch, useSelector}from'react-redux'
 import { resetPasswordToken } from '../../Actions/authAction';
 import { ClearSendResetToken, clearError } from '../../Slice/authSlice';
 import { toast } from 'react-toastify';
+import MetaData from '../layouts/MetaData';
 const ForgotPassword = () => {
     const {loading=false,error=null,isSendToken=null,isAuthenticatedUser=false}=useSelector(state=>state.authState)
 
@@ -45,9 +46,10 @@ const dispatch=useDispatch()
           }
           
 
-    },[isSendToken,error,isAuthenticatedUser])
+    },[isSendToken,error,isAuthenticatedUser,dispatch])
   return (
     <div className='row h-70 d-flex justify-content-center shadow p-2 bg-body-tertiary rounded'>
+      <MetaData title={'ForgotPassword'}/>
       <h2 className='fs-6 mb-5 text-center fw-bold'>Forgot Password</h2>
       <form action="#" onSubmit={handleSubmit} className='form-group'>
         <label htmlFor="ForgotPassword" style={{ display: 'block', marginBottom: '8px' }}>Email</label>

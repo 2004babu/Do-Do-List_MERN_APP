@@ -26,16 +26,9 @@ export const updateDoDo=DoDoData=>async(dispatch)=>{
 }
 // updateDoDo 
 export const deleteDoDO=DoDoId=>async(dispatch)=>{
-    console.log(DoDoId);
-    // const id={
-    //     DoDoId
-    // }
+   
     try {
-        const config={
-            Headers:{
-                'Content-Type':'application/json'
-            }
-        }
+       
         dispatch(deleteDoDoRequest())
         await axios.delete(`/api/server/dodo/${DoDoId}`)
         dispatch(deleteDoDoSuccess())

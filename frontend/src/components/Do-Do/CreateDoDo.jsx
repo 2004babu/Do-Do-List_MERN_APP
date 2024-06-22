@@ -9,11 +9,8 @@ const CreateDoDo = () => {
   const disaptch = useDispatch();
   const navigate = useNavigate();
   const {
-    DoDo: dodostate = {},
     loading = false,
-    isDoDoDeleted = null,
     error = null,
-    isDoDoUpdated = false,
     isDoDoCreated = false,
   } = useSelector((State) => State.DoDoState);
   const [title, setTitle] = useState("");
@@ -49,7 +46,7 @@ const CreateDoDo = () => {
         },
       });
     }
-  }, [isDoDoCreated, error, clearError, disaptch]);
+  }, [isDoDoCreated, error,  disaptch,navigate]);
   return (
     <Fragment>
       <MetaData title={"Create DoDo "} />

@@ -177,7 +177,7 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
 
   const token=await user.getResetToken()
 
-  user.save()
+   user.save()
 let BASE_URL=process.env.FRONTEND_URL
 
   if(process.env.NODE_ENV==='Production'){

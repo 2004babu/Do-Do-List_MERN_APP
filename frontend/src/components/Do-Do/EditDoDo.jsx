@@ -4,6 +4,7 @@ import { clearDoDoUpdate, clearError } from "../../Slice/DoDoSlice";
 import { getSingleDoDo, updateDoDo } from "../../Actions/DoDoActions";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import MetaData from "../layouts/MetaData";
 
 const EditDoDo = () => {
   const dispatch = useDispatch();
@@ -15,10 +16,10 @@ const EditDoDo = () => {
   const {
     DoDo: dodostate = [],
     loading = false,
-    isDoDoDeleted = null,
+    
     error = null,
     isDoDoUpdated = false,
-    isDoDoCreated = false,
+    
   } = useSelector((State) => State.DoDoState);
 
   const [title, setTitle] = useState("");
@@ -61,7 +62,7 @@ const navigate=useNavigate()
       dispatch(getSingleDoDo(id));
       return
     }
-  }, [dispatch, isAuthenticatedUser, isDoDoUpdated]);
+  }, [dispatch, isAuthenticatedUser, isDoDoUpdated,error,id,navigate]);
 
   useEffect(() => {
     if (dodostate.Data) {
@@ -74,6 +75,7 @@ const navigate=useNavigate()
 
   return (
     <Fragment>
+       <MetaData title={'EditDodo'}/>
       <form action="#" className=" container-fluid col-sm-8 col-md-6 col-lg-4 mb-4 shadow p-3 mb-5 bg-body-tertiary rounded" onSubmit={handleSubmit}>
         <h2>Edit DoDo </h2>
         <div className=" mb-4">

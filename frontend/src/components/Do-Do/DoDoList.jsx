@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { deleteDoDO, getallDoDo } from "../../Actions/DoDoActions";
+import { Link, useNavigate } from "react-router-dom";
+import {  getallDoDo } from "../../Actions/DoDoActions";
 import List from "./List";
 import { clearDoDoDeleted, clearError } from "../../Slice/DoDoSlice";
 import { toast } from "react-toastify";
+import MetaData from "../layouts/MetaData";
 
 const DoDoList = () => {
   const [search, setSearch] = useState("");
@@ -13,15 +14,13 @@ const DoDoList = () => {
   const { isAuthenticatedUser = null } = useSelector(
     (State) => State.authState
   );
-
+const navigate=useNavigate()
   
   const {
     DoDo: dodostate = [],
-    loading = false,
     isDoDoDeleted = null,
     error = null,
     isDoDoUpdated = false,
-    isDoDoCreated = false,
   } = useSelector((State) => State.DoDoState);
 
   let filtered;
@@ -31,12 +30,10 @@ const DoDoList = () => {
   filtered = dodostate;
   if (search) {
     filtered = dodostate.filter((item) => {
-      if (
+      return (
         item.Data.title.toLowerCase().includes(search.toLowerCase()) ||
         item.Data.subject.toLowerCase().includes(search.toLowerCase())
-      ) {
-        return item;
-      }
+      );
     });
   }
  
@@ -50,6 +47,9 @@ const DoDoList = () => {
     if (isAuthenticatedUser) {
       dispatch(getallDoDo);
     }
+    if (!isAuthenticatedUser) {
+      navigate('/login')
+    }
     if(error){
       toast(error,{type:'error',onOpen:()=>{
         dispatch(clearError())
@@ -57,9 +57,10 @@ const DoDoList = () => {
       }})
     }
     
-  }, [dispatch,error,isDoDoDeleted,isAuthenticatedUser,isDoDoUpdated]);
+  }, [dispatch,error,isDoDoDeleted,isAuthenticatedUser,isDoDoUpdated,navigate]);
   return (
     <Fragment>
+      <MetaData title={'DoDoList'}/>
       <div className="input-gruop">
         <label htmlFor="search">Search</label>
         <input
@@ -72,7 +73,10 @@ const DoDoList = () => {
        
       </div>
       <Fragment>
-        <table border={2}  className=" table table-striped table-hover table-bordered  mt-4">
+      {isAuthenticatedUser &&<div className="flex-colum" id="createdodo"><button  className="btn-green btn">
+            <Link to={"/createdodo"} >Add DoDo</Link>
+          </button ></div>}
+        <table border={2}  className=" table table-striped table-hover table-bordered  mt-2">
          <thead>
           <tr className="table-dark">
             <th className="col text-center">Title</th>
@@ -83,7 +87,7 @@ const DoDoList = () => {
           </thead> 
           <tbody>
 
-          {filtered.length ? (
+          {isAuthenticatedUser &&filtered.length ? (
             filtered.map((item) => <List key={item._id} item={item} />)
           ):null }
           </tbody>
@@ -91,9 +95,7 @@ const DoDoList = () => {
               
           
         </table>
-            <div className="flex-colum" id="createdodo"><button  className="btn-green">
-            <Link to={"/createdodo"} >Add DoDo</Link>
-          </button ></div>
+           
       </Fragment>
     </Fragment>
   );

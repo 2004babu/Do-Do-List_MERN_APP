@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import {useDispatch, useSelector}from 'react-redux'
 import {toast} from 'react-toastify'
 import {useNavigate}from 'react-router-dom'
-import {loaduser, updateProfile} from'../../Actions/authAction'
+import { updateProfile} from'../../Actions/authAction'
 import { clearError, clearProfileUpdated } from "../../Slice/authSlice";
+import MetaData from "../layouts/MetaData";
 const EditProfile = () => {
   const {user={},isProfileUpdated=null,error=null,loading=false}=useSelector(state=>state.authState)
   const navigate=useNavigate()
-  const {name:sname='',email:semail='',avatar}=user;
+  const {name:sname='',avatar}=user;
   const [name, setName] = useState(sname);
   
   const [Avatar, setAvatar] = useState(avatar);
@@ -60,11 +61,12 @@ const dispatch=useDispatch()
       return
     }
 
-  },[isProfileUpdated,error,dispatch])
+  },[isProfileUpdated,error,dispatch,navigate])
 
  
   return (
     <form onSubmit={handleSubmit} className="row mt-5 p-4 d-flex gap-2">
+      <MetaData title={'EditProfile'}/>
       <div className="form-group">
         <label htmlFor="editprofilename" className="form-label">Name</label>
         <input type="text" name="" value={name} onChange={e=>setName(e.target.value)} id="editprofilename" className="form-control" />
@@ -75,7 +77,7 @@ const dispatch=useDispatch()
         <input type="file" name="" onChange={handleAvatar} id="editprofileavatar" className="form-control" />
       </div>
       <figure className="figure mt-3 ">
-        <img src={AvatarPreview} alt="" height={'40px'} width={'40px'} className=" image-fluid rounded " />
+        <img src={AvatarPreview} alt="" height={'40px'} width={'40px'} className=" image-fluid rounded  object-fit-cover" />
       </figure>
       <div className="form-group d-flex justify-content-center">
       <button type="submit"  className="btn btn-success p-1 mt-2 col-4" disabled={loading}>Save Changes</button>

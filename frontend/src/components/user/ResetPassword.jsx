@@ -4,6 +4,7 @@ import {  useNavigate, useParams } from 'react-router-dom'
 import { ClearChangePassword, clearError } from '../../Slice/authSlice'
 import { changePassword } from '../../Actions/authAction'
 import {toast}from'react-toastify'
+import MetaData from '../layouts/MetaData'
 const ResetPassword = () => {
     const {loading=false,error=null,isPasswordChange=null,isAuthenticatedUser=false}=useSelector(state=>state.authState)
     const [password,setPassword]=useState('')
@@ -21,7 +22,7 @@ const ResetPassword = () => {
     }
     useEffect(()=>{
         if(isPasswordChange){
-            toast(`send token your Email `,{
+            toast(`Password Change SuccessFully `,{
               type:'success',
               onOpen:()=>{
                 dispatch(ClearChangePassword())
@@ -54,7 +55,7 @@ const ResetPassword = () => {
     },[isPasswordChange,error,isAuthenticatedUser,dispatch,navigate])
   return (
     <div className='col-lg-3  row d-flex justify-content-center align-items center p-3 mt-5 '>
-         
+         <MetaData title={'Reset Password'}/>
       <form action="# " onSubmit={handleSubmit} className="w-100 form-group p-5 mt-2 shadow bg-body-tertiary rounded">
         <h2 className='fs-6 mb-5 text-center fw-bold '>Change Password</h2>
         <label htmlFor="resetpass" className="form-label text-muted mt-3" style={{fontSize:"13px"}}>Password </label>

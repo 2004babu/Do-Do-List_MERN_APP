@@ -5,7 +5,7 @@ import Header from './components/layouts/Header'
 import Footer from './components/layouts/Footer';
 import Home from './components/Home';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserLogin from './components/user/UserLogin';
 import CreateDoDo from './components/Do-Do/CreateDoDo';
@@ -18,10 +18,15 @@ import Profile from './components/user/Profile';
 import EditProfile from './components/user/EditProfile';
 import ForgotPassword from './components/user/ForgotPassword';
 import ResetPassword from './components/user/ResetPassword';
+import { useSelector } from 'react-redux';
+import NotFound from './components/layouts/NotFound';
+import About from './components/user/About';
 function App() {
+  const {isPasswordChange=false}=useSelector(state=>state.authState)
+
 useEffect(()=>{
   store.dispatch(loaduser)
-},[])
+},[isPasswordChange])
   
 
   return (
@@ -40,6 +45,8 @@ useEffect(()=>{
           <Route path='/editprofile/:id' element={<EditProfile/>}/>
           <Route path='/forgotpassword' element={<ForgotPassword/>}/>
           <Route path='/password/reset/:id' element={<ResetPassword/>}/>
+          <Route path='/about' element={<About/>}/>
+          <Route path='*' element={<NotFound/>}/>
         </Routes>
         </div>
         <Footer/>

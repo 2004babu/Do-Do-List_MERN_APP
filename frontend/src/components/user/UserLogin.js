@@ -9,7 +9,7 @@ const UserLogin = () => {
   const disaptch = useDispatch();
   const navigate = useNavigate();
   const {
-    user = {},
+   
     loading = false,
     isAuthenticatedUser = null,
     error = null,
@@ -26,16 +26,21 @@ const UserLogin = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticatedUser) {
+    if (email&&isAuthenticatedUser) {
       toast("login success", { type: "success" });
       navigate('/')
+      return
+    }
+    if (isAuthenticatedUser) {
+      navigate('/')
+      return
     }
     if (error) {
       toast(error, { type: "error" ,onOpen:()=>{
         disaptch(clearError())
       }});
     }
-  }, [isAuthenticatedUser, error,disaptch]);
+  }, [isAuthenticatedUser, error,disaptch,email,navigate]);
   return (
     <Fragment>
       <MetaData title={"Login "} />
