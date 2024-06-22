@@ -22,7 +22,7 @@ process.on('unhandledRejection',(err)=>{
     })
 })
 
-process.on('uncaughtException',()=>{
+process.on('uncaughtException',(err)=>{
     console.log(`Error : ${err}`);
     console.log(`Shutting Down The Server unhandledRejection..`);
     server.close((err)=>{
