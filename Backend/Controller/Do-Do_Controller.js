@@ -131,4 +131,43 @@ exports.getAllDoDo = catchAsyncError(async (req, res, next) => {
 
 });
 
- 
+exports.getLocalDoDo = catchAsyncError(async (req, res, next) => {
+  console.log(req.body);
+  console.log(req.user);
+
+  const filtered = req.body.map(item => {
+    const dateString = item.cretaAt;
+    const dateParts = dateString.split(/[\s,\/:]+/);
+    const dateObject = new Date(
+      dateParts[2],
+      dateParts[1] - 1,
+      dateParts[0],
+      dateParts[3],
+      dateParts[4],
+      dateParts[5]
+    );
+
+    return {
+      Data: {
+        title: item.Data.title,
+        subject: item.Data.subject,
+      },
+      cretaAt: dateObject,
+      user: req.user._id,
+    };
+  });
+
+  console.log(filtered);
+
+  try {
+    const dodo = await DoDo_Model.create(filtered);
+    console.log(dodo);
+    res.status(201).json({
+      success: true,
+      data: dodo
+    });
+  } catch (error) {
+    console.error('Error saving Dodo:', error);
+    // next(error); // Pass the error to the error handling middleware
+  }
+});

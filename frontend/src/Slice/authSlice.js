@@ -10,7 +10,8 @@ const userSlice = createSlice({
     isUserUpdated: false,
     isProfileUpdated: false,
     isSendToken: false,
-    isPasswordChange:false
+    isPasswordChange: false,
+    isLocalUser: false,
   },
   reducers: {
     userRequest(state, action) {
@@ -157,7 +158,6 @@ const userSlice = createSlice({
         ...state,
         loading: false,
         isSendToken: true,
-        
       };
     },
     sendResetTokenFail(state, action) {
@@ -184,7 +184,7 @@ const userSlice = createSlice({
         ...state,
         loading: false,
         isPasswordChange: true,
-        user:action.payload.user
+        user: action.payload.user,
       };
     },
     changePasswordFail(state, action) {
@@ -198,6 +198,18 @@ const userSlice = createSlice({
       return {
         ...state,
         isPasswordChange: false,
+      };
+    },
+    createLocalUser(state, action) {
+      return {
+        ...state,
+        isLocalUser: true,
+      };
+    },
+    clearLocalUser(state, action) {
+      return {
+        ...state,
+        isLocalUser: false,
       };
     },
   },
@@ -232,5 +244,7 @@ export const {
   changePasswordFail,
   changePasswordRequest,
   changePasswordSucces,
+  createLocalUser,
+  clearLocalUser,
 } = actions;
 export default reducer;

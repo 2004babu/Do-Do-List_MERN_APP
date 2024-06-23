@@ -5,11 +5,11 @@ import { loaduser } from "../../Actions/authAction";
 import MetaData from "../layouts/MetaData";
 
 const Profile = () => {
-  const { user = {} } = useSelector((state) => state.authState);
+  const { user = {} ,isProfileUpdated=null} = useSelector((state) => state.authState);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loaduser);
-  }, [dispatch]);
+  }, [dispatch,isProfileUpdated]);
 
   return (
     <div

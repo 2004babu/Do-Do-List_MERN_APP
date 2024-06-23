@@ -2,7 +2,7 @@ const express=require('express')
 const router=express.Router()
 
 const {isAuthenticatedUser, logoutUser}=require('../Controller/authController')
-const { createDoDo, updateDoDo, deleteDoDo, getSingleDoDo, getAllDoDo } = require('../Controller/Do-Do_Controller')
+const { createDoDo, updateDoDo, deleteDoDo, getSingleDoDo, getAllDoDo, getLocalDoDo } = require('../Controller/Do-Do_Controller')
 
 router.route('/dodo')
                     .post(isAuthenticatedUser,createDoDo)
@@ -13,6 +13,8 @@ router.route('/dodo/:id')
                     
 router.route('/getalldodo')
                     .get(isAuthenticatedUser,getAllDoDo)
+router.route('/sendlocaldodo')
+                    .post(isAuthenticatedUser,getLocalDoDo)
 
 
 

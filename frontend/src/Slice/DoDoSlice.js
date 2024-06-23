@@ -9,6 +9,7 @@ const DoDoSlice = createSlice({
     error: null,
     isDoDoUpdated: false,
     isDoDoCreated: false,
+    isLocalDodoSend: false,
   },
   reducers: {
     DoDoRequest(state, action) {
@@ -120,6 +121,33 @@ const DoDoSlice = createSlice({
         isDoDoCreated: false,
       };
     },
+    SendLocalDODORequest(state, action) {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    SendLocalDODOSuccess(state, action) {
+      return {
+        ...state,
+        loading: false,
+        isLocalDodoSend: true,
+      };
+    },
+
+    SendLocalDODOFail(state, action) {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    },
+    clearlocalDoDoSend(state, action) {
+      return {
+        ...state,
+        isLocalDodoSend: false,
+      };
+    },
   },
 });
 
@@ -141,6 +169,10 @@ export const {
   DoDoCreateSuccess,
   DoDoCreateRequest,
   DoDoCreateFail,
-  clearDoDoCreated
+  clearDoDoCreated,
+  SendLocalDODOFail,
+  SendLocalDODORequest,
+  SendLocalDODOSuccess,
+  clearlocalDoDoSend,
 } = actions;
 export default reducer;

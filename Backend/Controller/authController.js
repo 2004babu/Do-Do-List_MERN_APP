@@ -24,7 +24,7 @@ exports.isAuthenticatedUser=catchAsyncError(async(req,res,next)=>{
 
   const user=await User.findById(id)
   req.user=user
-  // console.log("isAuthenticateduser",user);
+  console.log("isAuthenticateduser",user);
 next()
 })
 

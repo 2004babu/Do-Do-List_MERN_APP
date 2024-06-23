@@ -1,7 +1,7 @@
 
 
 import axios from 'axios'
-import { DoDoCreateFail, DoDoCreateRequest, DoDoCreateSuccess, DoDoFail, DoDoRequest, DoDoSuccess, DoDoUpdateFail, DoDoUpdateRequest, DoDoUpdateSuccess, deleteDoDoFail, deleteDoDoRequest, deleteDoDoSuccess } from '../Slice/DoDoSlice'
+import { DoDoCreateFail, DoDoCreateRequest, DoDoCreateSuccess, DoDoFail, DoDoRequest, DoDoSuccess, DoDoUpdateFail, DoDoUpdateRequest, DoDoUpdateSuccess, SendLocalDODOFail, SendLocalDODORequest, SendLocalDODOSuccess, deleteDoDoFail, deleteDoDoRequest, deleteDoDoSuccess } from '../Slice/DoDoSlice'
 
 //create Dodo  process 
 export const createDoDo=DoDoData=>async(dispatch)=>{
@@ -59,6 +59,15 @@ export const getallDoDo=async(dispatch)=>{
 }
 
 
-
+export const sendLocalDoDO=dodo=>async(dispatch)=>{
+    try {
+        
+        dispatch(SendLocalDODORequest())
+        await axios.post(`/api/server/sendlocaldodo`,dodo)
+        dispatch(SendLocalDODOSuccess())
+    } catch (error) {
+        dispatch(SendLocalDODOFail(error.response.data.message))
+    }
+}
 
 
